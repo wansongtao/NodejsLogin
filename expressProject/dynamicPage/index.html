@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页</title>
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/index.css">
+    <!-- <script src="../../js/layer/layer.js"></script> -->
+</head>
+
+<body>
+    <!-- <h1>欢迎来到首页</h1> -->
+    <table id="heros">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>英雄名</td>
+                <td>性别</td>
+                <td>操作</td>
+            </tr>
+        </thead>
+        <tbody>
+            {{each users}}
+            <tr>
+                <td>{{$value.id}}</td>
+                <td>{{$value.name}}</td>
+                <td>{{$value.gender == 'M' ? '男': '女'}}</td>
+                <td><input type="button" value="删除" class="btn"></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    <script>
+        document.querySelector('#heros tbody').addEventListener('click', () => {
+            alert('正在加紧开发中');
+        });
+    </script>
+</body>
+
+</html>

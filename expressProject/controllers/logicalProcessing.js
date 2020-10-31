@@ -1,0 +1,114 @@
+/**
+ * @description 逻辑处理
+ * @date 2020-10-29
+ * @author wansongtao
+ */
+
+const logicalProcessing = {};
+
+//引入数据库模块
+logicalProcessing.database = require('../models/databaseConn');
+
+/**
+ * @description 验证用户登录
+ * @param {string} userName 账号
+ * @param {number} userPwd 密码
+ * @returns 状态码和具体信息
+ */
+logicalProcessing.login = async ({
+    userName,
+    userPwd
+}) => {
+    if (typeof userName !== 'string' || typeof userPwd !== 'string') {
+        return {
+            code: 401,
+            msg: '登录信息有误'
+        };
+    }
+
+    let message = {},
+        data = [];
+
+    //查询该账户是否注册了
+    let queryStr = "select id from users where isdelete = '0' and account = ?";
+
+    data = await logicalProcessing.database.query(queryStr, [userName]);
+
+    if (data[0]) {
+        //查询密码是否正确
+        queryStr = "select id from users where isdelete = '0' and account = ? and pwd = ?";
+
+        data = await logicalProcessing.database.query(queryStr, [userName, userPwd]);
+
+        message = logicalProcessing.returnMessage(data);
+
+    } else if (!data[0] && data !== false) {
+        message = {
+            code: 301,
+            msg: '该账户未注册，请先注册！'
+        };
+    } else {
+        message = {
+            code: 504,
+            msg: '服务器繁忙，请稍后再试'
+        };
+    }
+
+    return message;
+};
+
+/**
+ * @description 查询数据中的所有英雄，并返回相应数据
+ */
+logicalProcessing.getHeros = async() => {
+    let data = [];
+
+    //查询该账户是否注册了
+    let queryStr = "select id, name, gender from heros where isdelete = '0'";
+
+    data = await logicalProcessing.database.query(queryStr);
+
+    if(data[0]) {
+        return data;
+    }else if(data === false){
+        return {
+            code: 504,
+            msg: '服务器繁忙，请稍后再试'
+        };
+    }else {
+        return {
+            code: 505,
+            msg: '未查找到任何数据'
+        };
+    }
+};
+
+/**
+ * @description 根据查询到的数据返回信息
+ * @param {object} data 查询返回的数据
+ * @returns 返回一个对象 {code: 200, msg: 'message'}
+ */
+logicalProcessing.returnMessage = (data) => {
+    let message = {};
+
+    if (data[0]) {
+        message = {
+            code: 201,
+            msg: '登录成功'
+        };
+    } else if (!data[0] && data !== false) {
+        message = {
+            code: 302,
+            msg: '密码错误'
+        };
+    } else {
+        message = {
+            code: 504,
+            msg: '服务器繁忙，请稍后再试'
+        };
+    }
+    return message;
+};
+
+//导出模块
+module.exports = logicalProcessing;
