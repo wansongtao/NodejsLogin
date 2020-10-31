@@ -61,10 +61,10 @@ loginJs.submitHandle = (e) => {
     }
 
     //将账号密码提交给服务端验证
-    ajax('get', '/userLogin', {
+    ajax('/userLogin', {
         userName,
         userPwd
-    }, loginJs.login);
+    }, loginJs.login, 'get');
 };
 
 $(function () {

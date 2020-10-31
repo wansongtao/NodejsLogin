@@ -4,6 +4,9 @@
  * @author wansongtao
  */
 
+ /**
+  * @description 将全局变量和函数都存放在对象中，减少全局变量的使用
+  */
 const commonObj = {};
 
 /**
