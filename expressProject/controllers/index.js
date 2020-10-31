@@ -4,12 +4,15 @@
  * @author wansongtao
  */
 
+/**
+ * @description 将全局函数和全局变量保存到对象中，减少全局变量的使用
+ */
 const myIndex = {};
 
 //引入express模块
 myIndex.express = require('express');
 
-//引入两个中间件模块
+//引入两个中间件模块，用来处理post请求体和cookies
 myIndex.bodyParser = require('body-parser');
 myIndex.cookieParser = require('cookie-parser');
 
@@ -27,7 +30,10 @@ myIndex.webApp.listen(3000, (err) => {
 });
 
 //调用中间件
+//只有调用了，才能使用req.body获取post请求体
 myIndex.webApp.use(myIndex.bodyParser.urlencoded({extended: false}));
+
+//只有调用了，才能使用req.cookies获取cookies的值
 myIndex.webApp.use(myIndex.cookieParser());
 
 //创建一个模板引擎，param1：文件后缀名，param2：模板引擎的主函数

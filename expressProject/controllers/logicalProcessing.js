@@ -4,16 +4,19 @@
  * @author wansongtao
  */
 
+/**
+ * @description 将全局函数和全局变量保存到对象中，减少全局变量的使用
+ */
 const logicalProcessing = {};
 
 //引入数据库模块
 logicalProcessing.database = require('../models/databaseConn');
 
 /**
- * @description 验证用户登录
+ * @description 验证用户登录(异步函数)
  * @param {string} userName 账号
  * @param {number} userPwd 密码
- * @returns 状态码和具体信息
+ * @returns 状态码和具体信息 {code: 200, msg: '成功'}
  */
 logicalProcessing.login = async ({
     userName,
@@ -60,22 +63,22 @@ logicalProcessing.login = async ({
 /**
  * @description 查询数据中的所有英雄，并返回相应数据
  */
-logicalProcessing.getHeros = async() => {
+logicalProcessing.getHeros = async () => {
     let data = [];
 
-    //查询该账户是否注册了
+    //查询英雄信息
     let queryStr = "select id, name, gender from heros where isdelete = '0'";
 
     data = await logicalProcessing.database.query(queryStr);
 
-    if(data[0]) {
+    if (data[0]) {
         return data;
-    }else if(data === false){
+    } else if (data === false) {
         return {
             code: 504,
             msg: '服务器繁忙，请稍后再试'
         };
-    }else {
+    } else {
         return {
             code: 505,
             msg: '未查找到任何数据'
@@ -110,5 +113,5 @@ logicalProcessing.returnMessage = (data) => {
     return message;
 };
 
-//导出模块
+//导出模块，这样别的模块才可以引用这个模块，并使用其中的方法
 module.exports = logicalProcessing;

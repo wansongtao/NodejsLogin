@@ -1,31 +1,33 @@
 /**
- * @description 数据库模块（数据库相关操作）
+ * @description 数据库模块（数据库相关操作，例如：增删改查）
  * @date 2020-10-28
  * @author wansongtao
  * @database mysql数据库 库名：ExpressKing 表：heros、users
  */
 
-//引入mysql数据库模块
-const mysql = require('mysql');
-
 /**
- * @description 一个数据库对象，包含操作数据库的各种方法
+ * @description 一个数据库对象，包含操作数据库的各种方法，减少全局变量、函数的使用
  */
 const databaseObj = {};
 
 /**
+ * @description 引入mysql数据库模块
+ */
+databaseObj.mysql = require('mysql');
+
+/**
  * @description 创建连接池
  */
-databaseObj.pool = mysql.createPool({
-    connectionLimit: 15,
-    host: '127.0.0.1',
-    user: 'root',
-    password: 'password',
-    database: 'ExpressKing'
+databaseObj.pool = databaseObj.mysql.createPool({
+    connectionLimit: 15,  //连接数量
+    host: '127.0.0.1',  //数据库地址
+    user: 'root',  //数据库用户
+    password: 'password',  //数据库密码
+    database: 'ExpressKing'  //数据库库名
 });
 
 /**
- * @description 查询数据
+ * @description 数据库查询操作，返回查询到的数据，出错返回false
  * @param {string} queryStr 查询字符串(必选)
  * @param {Array} data 要放入查询字符串中的值（可选）
  * @returns 返回一个期约对象
@@ -61,9 +63,7 @@ databaseObj.query = (queryStr, data = []) => {
     });
 };
 
-/**
- * @description 导出数据库方法模块
- */
+//导出模块，这样别的模块才可以引用这个模块，并使用其中的方法
 module.exports = databaseObj;
 
 
