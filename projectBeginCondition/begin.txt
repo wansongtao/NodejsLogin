@@ -1,0 +1,10 @@
+1.本项目需要在电脑中安装node环境和mysql数据库。
+
+2.打开cmd命令行界面输入‘mysql -u root -p’进入mysql环境，然
+后输入‘source sql文件路径’导入数据库。
+
+3.找到controllers文件夹下的index.js，并在cmd命令行中使用node运行该文件。
+
+4.打开浏览器，输入localhost:3000即可访问。
+
+5.登录账户：admin，登录密码：wst980504。
