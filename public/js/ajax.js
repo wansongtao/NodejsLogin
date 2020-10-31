@@ -23,6 +23,7 @@ function ajax(url, data, successMethod, type = 'post', header = {}) {
     $.ajax({
         type: type,
         url: url,
+        header: header,
         data: data,
         dataType: "json",
         success: successMethod,

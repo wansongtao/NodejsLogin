@@ -1,7 +1,10 @@
+/**
+ * @description 将全局变量和函数都存放在对象中，减少全局变量的使用
+ */
 const loginJs = {};
 
 /**
- * @description 根据服务端返回的信息进行相应的操作
+ * @description 用户登录
  * @param {object} data 服务端返回的json数据（已经转换为了js对象）
  */
 loginJs.login = (data) => {
@@ -14,7 +17,8 @@ loginJs.login = (data) => {
         
         commonObj.showMsg(data);
     } catch (ex) {
-        layer.msg(ex.message, {
+        console.error(ex.message);
+        layer.msg('出现了未知错误，建议重启浏览器。', {
             icon: 5
         });
     }
