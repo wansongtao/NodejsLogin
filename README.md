@@ -1,2 +1,3 @@
 # NodejsLogin
 一个使用nodejs和mysql实现的简单登录功能
+请先阅读projectBegincondition文件夹下的begin.txt文件
